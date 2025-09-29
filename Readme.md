@@ -3,6 +3,7 @@
 ## 🏗️ Architecture Overview
 
 This project demonstrates a production-ready, cloud-native application built on AWS infrastructure, showcasing modern DevOps practices, containerization, and AI integration.
+<img width="1536" height="1024" alt="ChatGPT Image Sep 29, 2025, 10_32_04 PM" src="https://github.com/user-attachments/assets/fb5d29ec-8949-4611-a083-ae7a5ac2912c" />
 
 
 <img width="1914" height="999" alt="analize AI burger" src="https://github.com/user-attachments/assets/bd020d59-e1da-4056-bb84-2f88b1fd001a" />
