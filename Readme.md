@@ -1,152 +1,187 @@
-# Food Calorie Analyzer
+# AWS Cloud-Native Food Analysis Platform
 
-A web application that analyzes food images using AI to provide calorie estimates. Built with Node.js and deployed on AWS EKS with automated CI/CD.
+## 🏗️ Architecture Overview
 
-## Overview
+This project demonstrates a production-ready, cloud-native application built on AWS infrastructure, showcasing modern DevOps practices, containerization, and AI integration.
 
-Upload a photo of your food and get instant calorie analysis powered by AWS Bedrock AI models. The application features a modern web interface with drag-and-drop functionality and real-time processing.
+<img width="1920" height="996" alt="pizza analyze2" src="https://github.com/user-attachments/assets/5d3022dc-bf30-48b7-8e49-b79d0e952c76" />
+<img width="1914" height="999" alt="analize AI burger" src="https://github.com/user-attachments/assets/bd020d59-e1da-4056-bb84-2f88b1fd001a" />
+<img width="1920" height="998" alt="analize AI burger2" src="https://github.com/user-attachments/assets/4dfd7098-4d1c-4dc2-b203-8fc557c339d3" />
+<img width="1917" height="996" alt="pizza analyze1" src="https://github.com/user-attachments/assets/7924e433-158f-44d2-b936-11cac8b8c016" />
 
-**Live Demo**: [Food Calorie Analyzer](http://k8s-default-foodcalo-4fb3e4c9d9-2140805673.us-west-2.elb.amazonaws.com)
 
+## 📋 Project Description
 
-<img width="1914" height="999" alt="analize AI burger" src="https://github.com/user-attachments/assets/b11c43cc-37bd-4524-842c-cdbf93e36cb8" />
-<img width="1920" height="996" alt="pizza analyze2" src="https://github.com/user-attachments/assets/714aaad9-cfad-41fd-a4b6-62bef9fc9a63" />
+A sophisticated food analysis platform that leverages AWS services and AI capabilities to provide intelligent food recognition and nutritional analysis. The application is built with scalability, security, and automation at its core.
 
-<img width="1917" height="996" alt="pizza analyze1" src="https://github.com/user-attachments/assets/63ade996-1955-48b4-8dff-130a6fbaeb28" />
-<img width="1920" height="998" alt="analize AI burger2" src="https://github.com/user-attachments/assets/4a47534d-dd7b-4539-8b82-2486620b1e8d" />
-## Features
+## 🎯 Key Features
 
-- **Image Upload**: Drag & drop or click to upload food photos
-- **AI Analysis**: Powered by AWS Bedrock Claude models
-- **Instant Results**: Real-time calorie estimation and food identification
-- **Mobile Friendly**: Responsive design works on all devices
-- **Cloud Native**: Deployed on Kubernetes with auto-scaling
+- **AI-Powered Analysis**: Integration with AWS Bedrock for advanced food recognition and nutritional information
+- **Cloud-Native Architecture**: Fully containerized deployment on AWS EKS (Elastic Kubernetes Service)
+- **Automated CI/CD**: GitHub Actions pipeline for continuous integration and deployment
+- **Enterprise Security**: IRSA (IAM Roles for Service Accounts) for secure, fine-grained AWS permissions
+- **High Availability**: Auto-scaling and load balancing for optimal performance
+- **Modern Tech Stack**: Node.js backend with containerized microservices architecture
 
-## Technology Stack
+## 🔧 Technical Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Backend**: Node.js, Express.js
-- **AI/ML**: AWS Bedrock (Claude 3 Haiku)
-- **Infrastructure**: AWS EKS, Docker, Terraform
-- **CI/CD**: GitHub Actions
+### Cloud Infrastructure
+- **AWS EKS**: Managed Kubernetes cluster for container orchestration
+- **AWS Bedrock**: AI/ML service for food analysis and recognition
+- **AWS IAM**: Identity and Access Management with IRSA for service authentication
+- **Elastic Load Balancer**: Traffic distribution and high availability
+- **Amazon ECR**: Container registry for Docker images
 
-## Architecture
+### Application Layer
+- **Node.js**: Backend runtime environment
+- **Docker**: Containerization platform
+- **Kubernetes**: Container orchestration and management
 
-## Quick Start
+### CI/CD Pipeline
+- **GitHub Actions**: Automated build, test, and deployment workflows
+- **Docker Build**: Automated container image creation
+- **Kubectl**: Kubernetes deployment automation
 
-### Prerequisites
-- AWS CLI configured
-- Docker installed
-- kubectl configured
+## 🏛️ Architecture Components
 
-### Local Development
+### 1. User Interface Layer
+- Web-based interface for food image upload and analysis
+- Real-time results display
+- Responsive design for multiple devices
 
-1. Clone the repository:
-git clone https://github.com/idan5353/CaloriesAnalyzer.git
-cd CaloriesAnalyzer
+### 2. Application Layer (EKS Cluster)
+- **Containerized Node.js Applications**: Microservices running in Kubernetes pods
+- **Auto-scaling**: Horizontal Pod Autoscaler (HPA) based on load
+- **Service Mesh**: Internal service communication and load balancing
 
-text
+### 3. AI Integration Layer
+- **AWS Bedrock**: AI models for food recognition
+- Nutritional database integration
+- Real-time image analysis
 
-2. Install dependencies:
+### 4. Security Layer
+- **IRSA Configuration**: Pod-level IAM roles for secure AWS service access
+- No long-lived credentials stored in containers
+- Principle of least privilege access
+
+### 5. DevOps Pipeline
+```
+Code Push → GitHub Actions → Build Docker Image → Push to ECR → Deploy to EKS → Health Check
+```
+
+## 🚀 Deployment Flow
+
+1. **Developer pushes code** to GitHub repository
+2. **GitHub Actions triggered** automatically
+3. **Application built and tested** in CI environment
+4. **Docker image created** and tagged with version
+5. **Image pushed** to Amazon ECR
+6. **Kubernetes deployment updated** via kubectl
+7. **Rolling update performed** on EKS cluster
+8. **Health checks verify** deployment success
+
+## 🔐 Security Features
+
+- **IRSA (IAM Roles for Service Accounts)**: Kubernetes pods assume IAM roles without static credentials
+- **Network Policies**: Controlled traffic flow between services
+- **Secrets Management**: Kubernetes secrets for sensitive configuration
+- **Container Security**: Regular vulnerability scanning of images
+- **TLS/SSL**: Encrypted communication between services
+
+## 📊 Scalability & Performance
+
+- **Horizontal Auto-scaling**: Automatic pod scaling based on CPU/memory metrics
+- **Load Balancing**: Traffic distribution across multiple pod instances
+- **Resource Management**: CPU and memory limits/requests defined
+- **Cluster Auto-scaling**: Node pool expansion during high demand
+
+## 🛠️ Local Development Setup
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd <project-directory>
+
+# Install dependencies
 npm install
 
-text
+# Set up environment variables
+cp .env.example .env
 
-3. Set environment variables:
-export AWS_REGION=us-west-2
+# Run locally
+npm run dev
+```
 
-text
+## 🌐 Deployment
 
-4. Run the application:
-npm start
+### Prerequisites
+- AWS Account with appropriate permissions
+- EKS cluster configured
+- kubectl configured for your cluster
+- GitHub repository secrets configured
 
-text
+### Environment Variables
+```
+AWS_REGION=<your-region>
+EKS_CLUSTER_NAME=<cluster-name>
+ECR_REPOSITORY=<ecr-repo-url>
+BEDROCK_MODEL_ID=<model-id>
+```
 
-5. Open http://localhost:3000
+### Deploy to EKS
+```bash
+# Build Docker image
+docker build -t food-analysis-app .
 
-## Deployment
+# Tag and push to ECR
+aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account-id>.dkr.ecr.<region>.amazonaws.com
+docker tag food-analysis-app:latest <ecr-url>:latest
+docker push <ecr-url>:latest
 
-### Automated Deployment
-Push to the `main` branch and GitHub Actions will automatically:
-- Build Docker image
-- Push to Amazon ECR
-- Deploy to EKS cluster
-- Run health checks
+# Apply Kubernetes manifests
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
 
-### Manual Deployment
+## 📈 Monitoring & Observability
 
-1. Deploy infrastructure:
-cd terraform
-terraform apply
+- **CloudWatch Integration**: Centralized logging and metrics
+- **Kubernetes Dashboard**: Cluster visualization
+- **Application Logs**: Structured logging with log aggregation
+- **Health Endpoints**: Liveness and readiness probes
 
-text
+## 🎓 Learning Outcomes
 
-2. Deploy application:
-kubectl apply -f k8s/
+This project demonstrates proficiency in:
+- ✅ Cloud-native application development
+- ✅ Kubernetes orchestration and management
+- ✅ AWS services integration (EKS, Bedrock, IAM, ECR)
+- ✅ CI/CD pipeline implementation
+- ✅ Container security best practices
+- ✅ Infrastructure as Code principles
+- ✅ Microservices architecture
+- ✅ AI/ML service integration
 
-text
+## 🤝 Contributing
 
-## Project Structure
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-├── .github/workflows/ci-cd.yml # CI/CD pipeline
-├── k8s/ # Kubernetes manifests
-├── terraform/ # Infrastructure code
-├── server.js # Main application
-├── ai.js # AI integration
-└── Dockerfile # Container configuration
+## 📝 License
 
-text
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## API Endpoints
+## 👤 Author
 
-### Upload Image
-POST /api/upload
-Content-Type: multipart/form-data
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
 
-Field: photo (image file)
+## 🙏 Acknowledgments
 
-text
-
-### Health Check
-GET /health
-
-text
-
-## Configuration
-
-Set these GitHub repository secrets for CI/CD:
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `AWS_REGION` (us-west-2)
-- `ECR_REPOSITORY` (food-calorie-app)
-- `EKS_CLUSTER_NAME` (food-calorie-eks)
-
-## Usage
-
-1. Visit the application URL
-2. Upload a food image using drag & drop or file selection
-3. Click "Analyze Calories"
-4. View AI-generated results with calorie estimates
-
-## Monitoring
-
-Check application status:
-kubectl get pods -l app=food-calorie
-kubectl logs -l app=food-calorie
-
-text
-
-## Support
-
-For issues or questions:
-1. Check the application logs
-2. Verify AWS Bedrock model access is enabled
-3. Ensure all GitHub secrets are configured correctly
-
-## License
-
-MIT License - see LICENSE file for details.
+- AWS for providing robust cloud infrastructure
+- Kubernetes community for excellent documentation
+- Open source contributors
 
 ---
 
-**A cloud-native application demonstrating modern DevOps practices and AI integration**
+**Note**: This project is designed to showcase modern cloud-native development practices and enterprise-grade architecture suitable for production environments.
