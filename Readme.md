@@ -7,6 +7,10 @@ A web application that analyzes food images using AI to provide calorie estimate
 Upload a photo of your food and get instant calorie analysis powered by AWS Bedrock AI models. The application features a modern web interface with drag-and-drop functionality and real-time processing.
 
 **Live Demo**: [Food Calorie Analyzer](http://k8s-default-foodcalo-4fb3e4c9d9-2140805673.us-west-2.elb.amazonaws.com)
+<img width="1920" height="996" alt="pizza analyze2" src="https://github.com/user-attachments/assets/714aaad9-cfad-41fd-a4b6-62bef9fc9a63" />
+<img width="1914" height="999" alt="analize AI burger" src="https://github.com/user-attachments/assets/b11c43cc-37bd-4524-842c-cdbf93e36cb8" />
+<img width="1920" height="998" alt="analize AI burger2" src="https://github.com/user-attachments/assets/4a47534d-dd7b-4539-8b82-2486620b1e8d" />
+<img width="1917" height="996" alt="pizza analyze1" src="https://github.com/user-attachments/assets/63ade996-1955-48b4-8dff-130a6fbaeb28" />
 
 ## Features
 
