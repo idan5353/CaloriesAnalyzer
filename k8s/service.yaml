@@ -1,0 +1,12 @@
+# service-with-ingress.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: food-calorie-svc
+spec:
+  type: ClusterIP  # Changed from LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: food-calorie

@@ -1,0 +1,14 @@
+aws_region = "us-west-2"
+project_prefix = "food-calorie"
+cluster_name = "food-calorie-eks"
+
+node_group_instance_type = "t3.medium"
+node_group_desired_capacity = 2
+node_group_min_capacity = 1
+node_group_max_capacity = 3
+
+tags = {
+  Owner   = "Idan"
+  Project = "food-calorie"
+  Env     = "dev"
+}

@@ -1,0 +1,134 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+env:
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push Docker image
+        id: build-image
+        run: |
+          IMAGE_URI=$(aws ecr describe-repositories \
+            --repository-names "$ECR_REPOSITORY" \
+            --region $AWS_REGION \
+            --query "repositories[0].repositoryUri" \
+            --output text)
+          
+          IMAGE_TAG=${GITHUB_SHA::8}
+          
+          docker build -t $IMAGE_URI:$IMAGE_TAG -t $IMAGE_URI:latest .
+          docker push $IMAGE_URI:$IMAGE_TAG
+          docker push $IMAGE_URI:latest
+          
+          echo "image_uri=$IMAGE_URI:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.31.0'
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
+
+      - name: Deploy to Kubernetes
+        run: |
+          # Replace image placeholder
+          sed -i "s|<ECR_REPO_URL>:latest|${{ steps.build-image.outputs.image_uri }}|g" k8s/deployment.yaml
+          
+          # Apply manifests in order
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/ingress.yaml  # ✅ Apply ingress
+          
+          # Update deployment image
+          kubectl set image deployment/food-calorie-api \
+            food-calorie=${{ steps.build-image.outputs.image_uri }}
+
+      - name: Wait for deployment
+        run: |
+          kubectl rollout status deployment/food-calorie-api --timeout=300s
+          
+          echo "Checking pods..."
+          kubectl get pods -l app=food-calorie
+          
+          echo "Checking service..."
+          kubectl get service food-calorie-svc
+          
+          echo "Checking ingress..."
+          kubectl get ingress food-calorie-ingress
+
+      # ✅ Updated health check for Ingress
+      - name: Health check via Ingress
+        run: |
+          # Get ALB hostname from ingress
+          ALB_HOSTNAME=$(kubectl get ingress food-calorie-ingress \
+            -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+          
+          if [ -n "$ALB_HOSTNAME" ]; then
+            echo "✅ ALB Hostname: $ALB_HOSTNAME"
+            echo "🔗 Application URL: http://$ALB_HOSTNAME"
+            
+            # Wait for ALB to be ready (takes longer than NLB)
+            echo "⏳ Waiting for ALB to be ready (this may take 2-3 minutes)..."
+            sleep 120
+            
+            # Test health endpoint with retries
+            for i in {1..8}; do
+              echo "🔍 Health check attempt $i/8..."
+              if curl -f "http://$ALB_HOSTNAME/health" --max-time 15 --connect-timeout 10; then
+                echo "✅ Health check passed! App is accessible at: http://$ALB_HOSTNAME"
+                break
+              else
+                echo "⏳ Attempt $i failed, retrying in 30s..."
+                sleep 30
+              fi
+              
+              if [ $i -eq 8 ]; then
+                echo "❌ Health check failed after 8 attempts"
+                echo "🔍 Debugging info:"
+                kubectl describe ingress food-calorie-ingress
+                kubectl get events --field-selector reason=ProvisioningFailed
+              fi
+            done
+          else
+            echo "⚠️ ALB hostname not ready yet"
+            kubectl describe ingress food-calorie-ingress
+          fi
+
+      - name: Output URLs
+        run: |
+          ALB_HOSTNAME=$(kubectl get ingress food-calorie-ingress \
+            -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' || echo "pending")
+          
+          echo "📋 Deployment Summary:"
+          echo "🌐 Application URL: http://$ALB_HOSTNAME"
+          echo "🏥 Health Check: http://$ALB_HOSTNAME/health"
+          echo "📤 Upload API: http://$ALB_HOSTNAME/api/upload"
+
