@@ -5,12 +5,10 @@
 This project demonstrates a production-ready, cloud-native application built on AWS infrastructure, showcasing modern DevOps practices, containerization, and AI integration.
 <img width="1536" height="1024" alt="ChatGPT Image Sep 29, 2025, 10_32_04 PM" src="https://github.com/user-attachments/assets/fb5d29ec-8949-4611-a083-ae7a5ac2912c" />
 
+<img width="1080" height="1080" alt="photo-collage png (1)" src="https://github.com/user-attachments/assets/6d32b691-a394-4c82-b9cd-13df813e3935" />
+<img width="1080" height="1080" alt="photo-collage png" src="https://github.com/user-attachments/assets/c85cafe8-99af-46d8-a9fc-c57a74d6e957" />
 
-<img width="1914" height="999" alt="analize AI burger" src="https://github.com/user-attachments/assets/bd020d59-e1da-4056-bb84-2f88b1fd001a" />
-<img width="1920" height="996" alt="pizza analyze2" src="https://github.com/user-attachments/assets/5d3022dc-bf30-48b7-8e49-b79d0e952c76" />
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-<img width="1917" height="996" alt="pizza analyze1" src="https://github.com/user-attachments/assets/7924e433-158f-44d2-b936-11cac8b8c016" />
-<img width="1920" height="998" alt="analize AI burger2" src="https://github.com/user-attachments/assets/4dfd7098-4d1c-4dc2-b203-8fc557c339d3" />
+
 
 ## 📋 Project Description
 
