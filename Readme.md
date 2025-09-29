@@ -7,7 +7,7 @@ This project demonstrates a production-ready, cloud-native application built on 
 
 <img width="1914" height="999" alt="analize AI burger" src="https://github.com/user-attachments/assets/bd020d59-e1da-4056-bb84-2f88b1fd001a" />
 <img width="1920" height="996" alt="pizza analyze2" src="https://github.com/user-attachments/assets/5d3022dc-bf30-48b7-8e49-b79d0e952c76" />
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 <img width="1917" height="996" alt="pizza analyze1" src="https://github.com/user-attachments/assets/7924e433-158f-44d2-b936-11cac8b8c016" />
 <img width="1920" height="998" alt="analize AI burger2" src="https://github.com/user-attachments/assets/4dfd7098-4d1c-4dc2-b203-8fc557c339d3" />
 
